@@ -17,13 +17,17 @@ public class OppPokemon extends Pokemon {
         this.power = power;
     }
 
-    //necessary get methods
+    //get methods
     public int getHp() {
         return hp;
     }
     public int getPower() {
         return power;
     }
+    public String getDifficulty() {
+        return difficulty;
+    }
+    //note: set methods in this case are not needed and would be redundant
 
     public void printInfo() {
         System.out.printf("%s [%s], DIFFICULTY: %s", pmName, pmType, difficulty);
