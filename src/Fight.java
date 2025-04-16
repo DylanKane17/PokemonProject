@@ -2,18 +2,24 @@ import java.util.Scanner;
 import java.util.Random;
 
 
-public class Fight /* will extend the Pokémon class eventually */ {
+public class Fight {
 
     int pokemonCode; //delete me
     Random randGen = new Random();
-    int health = 100;
-    String oppName;
-    int oppHealth = 100;
+    int pmHp = 100;
+    int oppHp;
     boolean dead = false;
 
-    public Fight(int myPokemonCode, String oppName) {
-        this.oppName = oppName;
-        pokemonCode = myPokemonCode;
+    String pmName; //user's Pokemon
+    String oppName;//enemy Pokemon
+    int oppAttack; //enemy's attack power
+
+    public Fight(Pokemon pokemon, OppPokemon oppPokemon) {
+        oppName = oppPokemon.getPmName();
+        pokemonCode = pokemon.getPmCode();
+        pmName = pokemon.getPmName();
+        oppHp = oppPokemon.getHp();
+        oppAttack = oppPokemon.getPower();
     }
 
     String[][] options = {
@@ -22,13 +28,17 @@ public class Fight /* will extend the Pokémon class eventually */ {
     };
 
     String[][][] moves = {
-            {{"Zap", "15 Power, 50% success rate"}, {"Thunderbolt", "30 Power, 10% success rate"}}, //electric code: 0
-            {{"Splash", "35 Power, 100% success rate"}, {""}} //water
+            {{"Zap", "[ELECTRIC]"}, {"Thunderbolt", "[ELECTRIC]"}, {"Tackle", "[NORMAL]"}}, //electric code: 0
+            {{"Splash", "[WATER]"}, {"Dive", "[WATER]"}, {"Take Down", "[NORMAL]"}}, //water code: 1
+            {{"Vine Whip", "[GRASS]"}, {"Seed Bomb", "[GRASS]"}, {"Heal", "[NORMAL]"}}, //grass code: 2
+            {{"Vine Whip", "[GRASS]"}, {"", "[GRASS]"}, {"Scratch", "[NORMAL]"}} //fire code: 3
     };
 
-    Integer[][][] powerAndSuccess = {
-            {{15, 50}, {30, 10}},
-            {{35, 100}},
+    int[][][] powerAndSuccess = { //{power, success %}
+            {{15, 90}, {40, 30}, {80, 15}}, //high power, low chances of success
+            {{10, 100}, {25, 90}, {50, 60}}, //low power, high chances of success
+            {{15, 70}, {25, 60}, {0, 100}}, //low attack, can heal
+            {{20, 80}, {30, 35}, {40, 55}} //all-rounder
     };
 
     public void printAndChoose(int optionSet, Scanner scnr) {
@@ -40,20 +50,16 @@ public class Fight /* will extend the Pokémon class eventually */ {
         System.out.print("Choice: ");
         int choice = scnr.nextInt();
         if (optionSet == 0) {
-            if (choice == 1) {
-                fight(randGen, scnr);
-            }
-            if (choice == 2) {
-                System.out.print("You manage to escape!");
-            }
+            if (choice == 1) fight(randGen, scnr);
+            if (choice == 2) System.out.println("You manage to escape!");
         }
     }
 
     public int printAndChooseMove(int moveSet, Scanner scnr) {
         System.out.println("\nSelect Your Move:");
         int num = 1;
-        for (int i = 0; i < moves[moveSet].length; i++) {
-            System.out.printf("-%d %s: %s\n", num, moves[moveSet][i][0], moves[moveSet][i][1]);
+        for (int i = 0; i < moves[moveSet].length; i++) { //prints out in form of a checklist
+            System.out.printf("-%d %s: %d attack, %d success chance %s\n", num, moves[moveSet][i][0], powerAndSuccess[moveSet][i][0], powerAndSuccess[moveSet][i][1], moves[moveSet][i][1]);
             num += 1;
         }
         System.out.print("Choice: ");
@@ -68,7 +74,7 @@ public class Fight /* will extend the Pokémon class eventually */ {
 
     public void fight(Random randGen, Scanner scnr) {
 
-        int choice = printAndChooseMove(0, scnr);
+        int choice = printAndChooseMove(pokemonCode, scnr);
 
         if (!dead) {
             if (randGen.nextInt(99) + 1 <= powerAndSuccess[pokemonCode][choice][1]) {
@@ -81,37 +87,38 @@ public class Fight /* will extend the Pokémon class eventually */ {
         if (!dead) {
             System.out.print(oppName + " attacks! ");
             if (randGen.nextInt(99) + 1 <= 80) {
-                takeDamage(30); //delete 30
+                takeDamage(oppAttack);
             } else {
                 System.out.println("You dodged the attack!");
             }
         }
 
-
-        System.out.println();
-        System.out.println();
-        printAndChoose(0, scnr);
+        if (!dead) {
+            System.out.println();
+            System.out.println();
+            printAndChoose(0, scnr);
+        }
     }
 
     private void hit(String moveName, int power ) {
-        System.out.print("You hit [opposition pokemon] with " + moveName + "! It was very effective! They take " + power + " damage! ");
-        oppHealth -= power;
-        if (oppHealth <= 0) {
-            System.out.print(oppName + " fainted!");
+        System.out.print("You hit " + oppName + " with " + moveName + "! It was very effective! They take " + power + " damage! ");
+        oppHp -= power;
+        if (oppHp <= 0) {
+            System.out.println(oppName + " fainted!");
             dead = true;
         } else {
-            System.out.println("They have " + oppHealth + " HP remaining.");
+            System.out.println("They have " + oppHp + " HP remaining.");
         }
     }
 
     private void takeDamage(int damage) {
-        health -= damage;
+        pmHp -= damage;
         System.out.print("You take " + damage + " damage! ");
-        if (health <= 0) {
-            System.out.println("Your Pokémon fainted!");
+        if (pmHp <= 0) {
+            System.out.println(pmName + " fainted!");
             dead = true;
         } else {
-            System.out.print("Your Pokémon has " + health + " HP remaining.");
+            System.out.print(pmName + " has " + pmHp + " HP remaining.");
         }
     }
 }
