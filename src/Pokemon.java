@@ -61,6 +61,10 @@ public class Pokemon {
     public void setXp(int xp) {
         this.xp = xp;
     }
+    public void setPmCode(int pmCode) {
+        this.pmCode = pmCode;
+    }
+
     //get methods
     public String getPmName(){
         return pmName;

@@ -24,8 +24,7 @@ public class Fight {
     private OppPokemon oppPokemon; //enemy Pokemon
     private String pmName; //user's Pokemon name
     private String oppName;//enemy Pokemon's name
-    private int pmCode; //user's Pokemon code
-    private int oppCode; //enemy's Pokemon code (to calculate elemental damage)
+    private int pmCode; //user's Pokemon codee
     private int oppHp;
     private int oppAttack;//enemy's attack power
 
@@ -38,7 +37,6 @@ public class Fight {
         pmName = "unknown";
         oppHp = -1;
         oppAttack = -1;
-        oppCode = -1;
     }
 
     //parameterized constructor
@@ -50,7 +48,6 @@ public class Fight {
         pmName = pokemon.getPmName();
         oppHp = oppPokemon.getHp();
         oppAttack = oppPokemon.getPower();
-        oppCode = oppPokemon.getPmCode();
     }
 
     //array for the fighting options
@@ -96,7 +93,7 @@ public class Fight {
     }
 
     public void encounter(Scanner scnr) { //called in main() to begin fight sim
-        System.out.println("You've encountered " + oppName + "! What do you do next?");
+        System.out.println("You've encountered " + oppName + "! He is of a " + oppPokemon.getDifficulty() + " difficulty! What do you do next?");
         printAndChoose( scnr); //prompts user to either fight or run
     }
 

@@ -19,16 +19,29 @@ public class PokemonBattle {
         boolean fighting = true; //will be used to break out of while loop
 
         //Pokemon you can pick from
-        Pokemon charmander = new Pokemon("Fire", "Charmander", 2);
-        Pokemon bulbasaur = new Pokemon("Grass","Bulbasaur", 1);
-        Pokemon squirtle = new Pokemon("Water","Squirtle", 0);
+        Pokemon charmander = new Pokemon(); //uses default constructor
+        charmander.setPmName("Charmander");
+        charmander.setPmType("Fire");
+        charmander.setPmCode(2);
+        Pokemon bulbasaur = new Pokemon("Grass"); //uses type-only constructor
+        bulbasaur.setPmName("Bulbasaur");
+        bulbasaur.setPmCode(1);
+        bulbasaur.setLevel(1);
+        bulbasaur.setXp(0);
+        Pokemon squirtle = new Pokemon("Water","Squirtle", 0); //uses name/type/code constructor
 
-        //Enemy Pokemon
-        OppPokemon magikarp = new OppPokemon("Magikarp", "Water", 0, 50, "Easy", 10);
+//Enemy Pokemon
+        OppPokemon magikarp = new OppPokemon(); //uses default constructor
+        magikarp.setPmName("Magikarp");
+        magikarp.setPmType("Water");
+        magikarp.setPmCode(0);
+        magikarp.setHp(50);
+        magikarp.setDifficulty("Easy");
+        magikarp.setPower(10);
         OppPokemon flareon = new OppPokemon("Flareon", "Fire", 2, 150, "Medium", 15);
         OppPokemon sceptile = new OppPokemon("Mega Sceptile", "Grass", 1, 500, "Hard", 25);
 
-        //Array to make selection and printing more versatile
+//Array to make selection and printing more versatile
         OppPokemon[] oppPokemonList = {magikarp, flareon, sceptile};
 
         Pokemon yourPokemon = null;
@@ -54,6 +67,7 @@ public class PokemonBattle {
         else if (userInput.equalsIgnoreCase("squirtle")){
             yourPokemon = squirtle;
         }
+
         yourPokemon.setPmGender(randGen);
 
         System.out.println("Good choice! What would you like to name your " + userInput + "?");
@@ -97,10 +111,18 @@ public class PokemonBattle {
             Fight FightSim = new Fight(yourPokemon, oppPokemonList[choice - 1]); //starts fight sim
             FightSim.encounter(scnr);
 
-            System.out.println("Want to attempt another fight? (y/n)"); //asks if user wants to keep going
-            if (scnr.next().charAt(0) == 'n') fighting = false; //breaks out of loop
+            System.out.println("Want to attempt another fight? (y/n)");
+            if (scnr.next().charAt(0) == 'n'){ //Player no longer wants to keep playing
+                    System.out.println("Thank you for playing!\n"); //Prints final stats
+                    System.out.println("Your Pokemon's final stats are: \n");
+                    System.out.println(yourPokemon.getPmName());
+                    System.out.println("Type " + yourPokemon.getPmType() + ", " + yourPokemon.getPmGender());
+                    System.out.println("Level: " + yourPokemon.getLevel());
+                    System.out.println("Xp: " + yourPokemon.getXp());
+                    fighting = false; //breaks out of loop
+                }
+            }
             System.out.println();
-        }
 
 
     }
