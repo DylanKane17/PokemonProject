@@ -1,6 +1,6 @@
 /************************************************************************
  * @file Fight.java
- * @brief This program implements java to simulate a Pokemon-style fight
+ * @brief This program implements java to simulate a Pokemon-style fight (note: not used as a base class/extended class, rather to keep the main() less cluttered)
  * @author Dylan Kane, Neela Kuntamukkala
  * @data April 22, 2025
  *************************************************************************/
