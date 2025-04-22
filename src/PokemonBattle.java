@@ -1,3 +1,11 @@
+/************************************************************************
+ * @file PokemonBattle.java
+ * @brief This program implements java to create a program class. It prompts the user to select their Pokemon and an enemy to fight.
+ * @author Dylan Kane, Neela Kuntamukkala
+ * @data April 22, 2025
+ *************************************************************************/
+
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,15 +19,14 @@ public class PokemonBattle {
         boolean fighting = true; //will be used to break out of while loop
 
         //Pokemon you can pick from
-        Pokemon charmander = new Pokemon("Fire", "Charmander", 3);
-        Pokemon bulbasaur = new Pokemon("Grass","Bulbasaur", 2);
-        Pokemon squirtle = new Pokemon("Water","Squirtle", 1);
-        Pokemon pikachu = new Pokemon("Electric","Pikachu", 0);
+        Pokemon charmander = new Pokemon("Fire", "Charmander", 2);
+        Pokemon bulbasaur = new Pokemon("Grass","Bulbasaur", 1);
+        Pokemon squirtle = new Pokemon("Water","Squirtle", 0);
 
         //Enemy Pokemon
-        OppPokemon magikarp = new OppPokemon("Magikarp", "Water", 1, 50, "Easy", 10);
-        OppPokemon flareon = new OppPokemon("Flareon", "Fire", 3, 150, "Medium", 15);
-        OppPokemon sceptile = new OppPokemon("Mega Sceptile", "Grass", 2, 500, "Hard", 25);
+        OppPokemon magikarp = new OppPokemon("Magikarp", "Water", 0, 50, "Easy", 10);
+        OppPokemon flareon = new OppPokemon("Flareon", "Fire", 2, 150, "Medium", 15);
+        OppPokemon sceptile = new OppPokemon("Mega Sceptile", "Grass", 1, 500, "Hard", 25);
 
         //Array to make selection and printing more versatile
         OppPokemon[] oppPokemonList = {magikarp, flareon, sceptile};
@@ -30,12 +37,11 @@ public class PokemonBattle {
         char confirmName;
 
         System.out.println("Welcome to Pokemon Battle!\n\nLet's get started! First, which Pokemon" +
-                " would you like to choose? Charmander, Bulbasaur, Squirtle, or Pikachu?");
+                " would you like to choose? Charmander, Bulbasaur or Squirtle?");
         userInput = scnr.next();
         while(!userInput.equalsIgnoreCase("Charmander") &&
                 !userInput.equalsIgnoreCase("Bulbasaur") &&
-                !userInput.equalsIgnoreCase("Squirtle") &&
-                !userInput.equalsIgnoreCase("Pikachu")) {
+                !userInput.equalsIgnoreCase("Squirtle")) {
             System.out.print("Invalid choice. Enter again: ");
             userInput = scnr.next();
         }
@@ -47,9 +53,6 @@ public class PokemonBattle {
         }
         else if (userInput.equalsIgnoreCase("squirtle")){
             yourPokemon = squirtle;
-        }
-        else if (userInput.equalsIgnoreCase("pikachu")){
-            yourPokemon = pikachu;
         }
         yourPokemon.setPmGender(randGen);
 
@@ -91,11 +94,12 @@ public class PokemonBattle {
                 choice = scnr.nextInt();
             }
 
-            Fight FightSim = new Fight(yourPokemon, oppPokemonList[choice - 1]);
+            Fight FightSim = new Fight(yourPokemon, oppPokemonList[choice - 1]); //starts fight sim
             FightSim.encounter(scnr);
 
             System.out.println("Want to attempt another fight? (y/n)"); //asks if user wants to keep going
             if (scnr.next().charAt(0) == 'n') fighting = false; //breaks out of loop
+            System.out.println();
         }
 
 
