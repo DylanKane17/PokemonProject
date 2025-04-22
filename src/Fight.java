@@ -144,6 +144,7 @@ public class Fight {
         if (oppHp <= 0) {
             System.out.println(oppName + " fainted!");
             userPokemon.addMoreXp(oppPokemon.calculateXP()); //adds XP to user's Pokemon
+            System.out.println("Current XP: " + userPokemon.getXp()); //prints out current XP to user
             dead = true; //stops the printAndChoose() from running again; stops the fight
         } else {
             System.out.println("They have " + oppHp + " HP remaining."); //prints remaining hp
