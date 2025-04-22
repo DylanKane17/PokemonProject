@@ -116,9 +116,9 @@ public class PokemonBattle {
                     System.out.println("Thank you for playing!\n"); //Prints final stats
                     System.out.println("Your Pokemon's final stats are: \n");
                     System.out.println(yourPokemon.getPmName());
-                    System.out.println("Type " + yourPokemon.getPmType() + ", " + yourPokemon.getPmGender());
+                    System.out.println("Type: " + yourPokemon.getPmType() + ", " + yourPokemon.getPmGender());
                     System.out.println("Level: " + yourPokemon.getLevel());
-                    System.out.println("Xp: " + yourPokemon.getXp());
+                    System.out.println("XP: " + yourPokemon.getXp());
                     fighting = false; //breaks out of loop
                 }
             }
